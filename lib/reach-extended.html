@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@e850be07c3a96fdfbafbd57c63cd2679fea0fcb1/dist/aframe-master.min.js"></script>
+<script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>   <script src="http://localhost:8000/reach.js" type="module"></script>
+    <title>reach-extended</title>
+  </head>
+  <body>
+    <tw-storydata name="reach-extended" startnode="1" creator="Twine" creator-version="2.3.5" ifid="36861234-E4F0-4753-8DC8-A3AE5FCCAF37" zoom="1" format="reach" format-version="1.0.57" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">console.log("Loaded reach-extended 1.0.0");</script><tw-passagedata pid="1" name="Test" tags="" position="529,245" size="100,100">[[&#39;HelloExtended&#39;]]
+[[&#39;Details&#39;]]
+
+[;[%floor%]] </tw-passagedata><tw-passagedata pid="2" name="&#39;HelloExtended&#39;" tags="" position="515,59" size="100,100">This story contains functions in the library &#39;reach-extended&#39;. 
+
+You can import these functions into another story with the &#39;import&#39; function:
+
+window.story.import(&quot;http://localhost:8000/lib/reach-extended.html&quot;, &quot;reachExt&quot;);
+
+</tw-passagedata><tw-passagedata pid="3" name="%html%" tags="" position="119,79" size="100,100">p.htmlPanel(params.message);</tw-passagedata><tw-passagedata pid="4" name="&#39;Details&#39;" tags="" position="704,125" size="100,100">You can access the imported functions in your own story with a codes like this:
+
+Use [html[]] to run reach-extended&#39;s %html% object.</tw-passagedata><tw-passagedata pid="5" name="%floor%" tags="" position="279,164" size="100,100">var plane = document.createElement(&quot;a-entity&quot;);
+plane.setAttribute(&quot;geometry&quot;, &quot;primitive:plane&quot;);
+var color = params.parameter1;
+if (color === undefined || color === &quot;&quot;) {
+	color = &quot;#003300&quot;;
+}
+plane.setAttribute(&quot;material&quot;, &quot;color:&quot;+color);
+plane.setAttribute(&quot;rotation&quot;, &quot;-90 0 0&quot;);
+plane.setAttribute(&quot;scale&quot;, &quot;8 8 8&quot;);
+p.container.appendChild(plane);</tw-passagedata></tw-storydata>
+    <a-scene device-motion-permission>
+      <a-assets><img src="https://cdn.jsdelivr.net/gh/UofTMADLab/reach-dist/reachDefaultRoom.png" id="reach-default-360"/ crossorigin="anonymous"> </a-assets>
+<a-entity id="container"> </a-entity>
+      <a-entity laser-controls="hand: right"></a-entity>
+      <a-camera id="main-camera" wasd-controls="enabled: false">
+</a-camera>
+    </a-scene>
+</body>
+</html>
+
