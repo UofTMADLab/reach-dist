@@ -6,27 +6,265 @@
     <title>reach-extended</title>
   </head>
   <body>
-    <tw-storydata name="reach-extended" startnode="1" creator="Twine" creator-version="2.3.5" ifid="36861234-E4F0-4753-8DC8-A3AE5FCCAF37" zoom="1" format="reach" format-version="1.0.57" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">console.log("Loaded reach-extended 1.0.0");</script><tw-passagedata pid="1" name="Test" tags="" position="529,245" size="100,100">[[&#39;HelloExtended&#39;]]
-[[&#39;Details&#39;]]
+    <tw-storydata name="reach-extended" startnode="24" creator="Twine" creator-version="2.3.5" ifid="36861234-E4F0-4753-8DC8-A3AE5FCCAF37" zoom="1" format="reach" format-version="1.0.61" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">console.log("Loaded reach-extended 1.0.1");</script><tw-passagedata pid="1" name="Test" tags="" position="792,188" size="100,100">((#reach-default-360))
 
-[;[%floor%]] </tw-passagedata><tw-passagedata pid="2" name="&#39;HelloExtended&#39;" tags="" position="515,59" size="100,100">This story contains functions in the library &#39;reach-extended&#39;. 
+
+[evalSet[&quot;1.2 1.2&quot;]double]
+[evUnset[]double]
+[setScale[]double]
+[setScale[1.0 1.0]back]
+
+[load[Details]bop]
+[unload[HelloExtended]bop]
+
+[load[HelloExtended]bip]
+[unload[Details]bip]
+
+
+&amp;[[Details]]
+
+[inc[bipCount|1]bip]
+[eval[bipCount == 3|playBip]bip]
+[set[bipCount|0]playBip]</tw-passagedata><tw-passagedata pid="2" name="&#39;HelloExtended&#39;" tags="" position="515,59" size="100,100">This story contains functions in the library &#39;reach-extended&#39;. 
 
 You can import these functions into another story with the &#39;import&#39; function:
 
 window.story.import(&quot;http://localhost:8000/lib/reach-extended.html&quot;, &quot;reachExt&quot;);
 
-</tw-passagedata><tw-passagedata pid="3" name="%html%" tags="" position="119,79" size="100,100">p.htmlPanel(params.message);</tw-passagedata><tw-passagedata pid="4" name="&#39;Details&#39;" tags="" position="704,125" size="100,100">You can access the imported functions in your own story with a codes like this:
+</tw-passagedata><tw-passagedata pid="3" name="%html%" tags="" position="61,59" size="100,100">p.htmlPanel(params.message);</tw-passagedata><tw-passagedata pid="4" name="&#39;Details&#39;" tags="" position="657,60" size="100,100">You can access the imported functions in your own story with a codes like this:
 
-Use [html[]] to run reach-extended&#39;s %html% object.</tw-passagedata><tw-passagedata pid="5" name="%floor%" tags="" position="279,164" size="100,100">var plane = document.createElement(&quot;a-entity&quot;);
-plane.setAttribute(&quot;geometry&quot;, &quot;primitive:plane&quot;);
-var color = params.parameter1;
-if (color === undefined || color === &quot;&quot;) {
-	color = &quot;#003300&quot;;
+Use [html[]] to run reach-extended&#39;s %html% object.</tw-passagedata><tw-passagedata pid="5" name="%floor%" tags="" position="179,55" size="100,100">p.custom(&quot;reach_floor&quot;, params.id, (c) =&gt; {
+  var plane = document.createElement(&quot;a-entity&quot;);
+  plane.setAttribute(&quot;geometry&quot;, &quot;primitive:plane&quot;);
+  var color = params.parameter1;
+  if (color === undefined || color === &quot;&quot;) {
+	  color = &quot;#003300&quot;;
+  }
+  plane.setAttribute(&quot;material&quot;, &quot;color:&quot;+color);
+  plane.setAttribute(&quot;rotation&quot;, &quot;-90 0 0&quot;);
+  plane.setAttribute(&quot;scale&quot;, &quot;8 8 8&quot;);
+  c.el.appendChild(plane);
+});
+
+</tw-passagedata><tw-passagedata pid="6" name="%playSound%" tags="" position="1199,377" size="100,100">var srcName = params.parameter1;
+if (srcName === undefined || srcName === &quot;&quot;) {
+	srcName = &quot;https://samesimilar.com/reach/demo-media/pip.mp3&quot;;
 }
-plane.setAttribute(&quot;material&quot;, &quot;color:&quot;+color);
-plane.setAttribute(&quot;rotation&quot;, &quot;-90 0 0&quot;);
-plane.setAttribute(&quot;scale&quot;, &quot;8 8 8&quot;);
-p.container.appendChild(plane);</tw-passagedata></tw-storydata>
+
+var options = params;
+if (params.loop === undefined) {
+	params.loop = false;
+}
+if (params.autoplay === undefined) {
+	params.autoplay = false;
+}
+
+var sound = p.sound(srcName, params);
+
+var eventName = params.parameter2;
+if (eventName === undefined) {
+	return;
+}
+var removeFunc = window.passage.on(eventName, (sender) =&gt; {
+	sound.playSound();
+});
+
+p.onRemove(removeFunc);
+</tw-passagedata><tw-passagedata pid="7" name="%setScale%" tags="" position="1202,494" size="100,100">var event = params.parameter2;
+if (event === undefined || event == &quot;&quot;) {
+	return;
+}
+if (params.parameter1 === undefined) {
+	params.parameter1 = &quot;&quot;;
+}
+var parts = params.parameter1.split(&quot;|&quot;);
+var scale = parts[0];
+
+var target = parts[1];
+
+var removeFunc = window.passage.on(event, (sender, e) =&gt; {
+
+	if (scale === undefined || scale === &quot;&quot;) {
+		scale = e.detail.value;
+	}
+	if (scale === undefined) {
+		scale = &quot;1.0 1.0&quot;
+	}
+	if (target === undefined) {	
+		sender.setOption(&quot;scale&quot;, scale);
+	} else {
+		p.applyToAll(target, function(c) {
+			c.setOption(&quot;scale&quot;, scale);
+		});
+	}
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="8" name="%emit%" tags="" position="887,379" size="100,100">var outgoing = params.parameter1;
+var incoming = params.parameter2;
+
+var removeFunc = window.passage.on(incoming, (sender) =&gt; {
+	p.send(outgoing, sender);
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="9" name="%hide%" tags="" position="1090,374" size="100,100">var eventName = params.parameter2;
+
+var removeFunc = window.passage.on(eventName, (sender) =&gt; {
+	sender.hide();
+});
+
+p.onReady(removeFunc);</tw-passagedata><tw-passagedata pid="10" name="%load%" tags="" position="411,379" size="100,100">var passageName = params.parameter1;
+
+if (params.parameter2 === undefined || params.parameter2 === &quot;&quot;) {
+  p.load(passageName, params);
+} else {
+
+	var removeFunc = window.passage.on(params.parameter2, () =&gt; {
+		p.load(passageName, params);
+	});
+	
+	p.onRemove(removeFunc);
+}
+
+
+</tw-passagedata><tw-passagedata pid="11" name="%unload%" tags="" position="292,382" size="100,100">var passageName = params.parameter1;
+if (passageName === &quot;&quot;) {
+	passageName = undefined;
+}
+if (params.parameter2 === undefined || params.parameter2 === &quot;&quot;) {
+  p.unload(passageName);
+} else {
+	var removeFunc = window.passage.on(params.parameter2, (sender) =&gt; {
+
+		  p.unload(passageName);
+			
+	});
+	
+	p.onRemove(removeFunc);
+}
+
+
+</tw-passagedata><tw-passagedata pid="12" name="Details" tags="" position="663,188" size="100,100">
+
+{&quot;onMouseEnter&quot;: &quot;double&quot;, &quot;onMouseLeave&quot;:&quot;back&quot;,&quot;onClick&quot;:&quot;bip&quot;}[[&#39;Details&#39;]]
+
+
+[playSound[https://samesimilar.com/reach/demo-media/pip.mp3]playBip]</tw-passagedata><tw-passagedata pid="13" name="HelloExtended" tags="" position="503,191" size="100,100">
+
+{&quot;onClick&quot;:&quot;bop&quot;, &quot;onMouseEnter&quot;: &quot;double&quot;, &quot;onMouseLeave&quot;:&quot;back&quot;}[[&#39;HelloExtended&#39;]]
+
+
+[playSound[https://samesimilar.com/reach/demo-media/pop.mp3]bop]
+</tw-passagedata><tw-passagedata pid="14" name="%next%" tags="" position="289,503" size="100,100">
+var removeFunc = p.on(params.parameter2, () =&gt; {
+	window.story.show(params.parameter1);
+});
+
+</tw-passagedata><tw-passagedata pid="15" name="%eval%" tags="" position="601,379" size="100,100">
+
+
+var removeFunc = p.on(params.parameter2, () =&gt; {
+console.log(params);
+	var param1List = params.parameter1.split(&quot;|&quot;);
+	var comparison = param1List[0];
+	var event = param1List[1];
+	var code = &#96;return ${comparison}; &#96;;
+	var result = window.story.renderCode(code, window.story.state);	
+	if (result === true &amp;&amp; event !== undefined) {
+		p.send(event);
+	}
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="16" name="%inc%" tags="" position="716,375" size="100,100">var removeFunc = p.on(params.parameter2, () =&gt; {
+	var parts = params.parameter1.split(&quot;|&quot;);
+	var name = parts[0];
+	var amount = parts[1] === undefined ? 1 : Number(parts[1]);
+	if (window.story.state[name] === undefined) {
+		window.story.state[name] = 0;
+	}
+	window.story.state[name] = window.story.state[name] + amount;
+});
+
+p.onRemove(removeFunc);
+</tw-passagedata><tw-passagedata pid="17" name="%log%" tags="" position="892,501" size="100,100">var removeFunc = p.on(params.parameter2, (sender) =&gt; {
+	console.log(params.parameter1);
+	console.log(sender);
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="18" name="%dec%" tags="" position="711,504" size="100,100">var removeFunc = p.on(params.parameter2, () =&gt; {
+	var parts = params.parameter1.split(&quot;|&quot;);
+	var name = parts[0];
+	var amount = parts[1] === undefined ? 1 : Number(parts[1]);
+	if (window.story.state[name] === undefined) {
+		window.story.state[name] = 0;
+	}
+	window.story.state[name] = window.story.state[name] - amount;
+});
+
+p.onRemove(removeFunc);
+</tw-passagedata><tw-passagedata pid="19" name="%set%" tags="" position="597,500" size="100,100">if (params.parameter2 === undefined || params.parameter2 === &quot;&quot;) {
+	var parts = params.parameter1.split(&quot;|&quot;);
+	var name = parts[0];
+	var value = parts[1] === undefined ? &quot;0&quot; : parts[1];
+	window.story.renderCode(&#96;window.story.state[&quot;${name}&quot;] = ${value};&#96;, 		{});
+	return;
+}
+
+var removeFunc = p.on(params.parameter2, () =&gt; {
+	var parts = params.parameter1.split(&quot;|&quot;);
+	var name = parts[0];
+	var value = parts[1] === undefined ? &quot;0&quot; : parts[1];
+	window.story.renderCode(&#96;window.story.state[&quot;${name}&quot;] = ${value}&#96;, 		{});
+});
+
+p.onRemove(removeFunc);
+</tw-passagedata><tw-passagedata pid="20" name="%evset%" tags="" position="434,500" size="100,100">var removeFunc = p.on(params.parameter2, (sender, e) =&gt; {
+	e.detail.value = params.parameter1;
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="21" name="%evalSet%" tags="" position="596,641" size="100,100">
+var removeFunc = p.on(params.parameter2, (sender, e) =&gt; {
+
+
+	var comparison = params.parameter1;
+	
+	var code = &#96;return ${comparison}; &#96;;
+	var result = window.story.renderCode(code, window.story.state);	
+	e.detail.value = result;
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="22" name="%evUnset%" tags="" position="732,644" size="100,100">
+var removeFunc = p.on(params.parameter2, (sender, e) =&gt; {
+	delete e.detail.value;
+});
+
+p.onRemove(removeFunc);</tw-passagedata><tw-passagedata pid="23" name="%video%" tags="" position="181,182" size="100,100">var videoURL = params.parameter1;
+var options = params;
+
+if (options.autoplay === undefined) {
+	options.autoplay = false;
+}
+
+if (options.loop === undefined) {
+	options.loop = false;
+}
+
+var video = p.videoPanel(videoURL, options);
+
+var eventName = params.parameter2;
+if (eventName === undefined) {
+	return;
+}
+
+var removeFunc = window.passage.on(eventName, (sender) =&gt; {
+	video.playVideo();
+});
+
+p.onRemove(removeFunc);
+
+
+</tw-passagedata><tw-passagedata pid="24" name="TestVideo" tags="" position="106,361" size="100,100">{&quot;direction&quot;:-2.94, &quot;inclination&quot;: -0.32, &quot;distance&quot;:5, &quot;onClick&quot;: &quot;vidclick&quot;, &quot;width&quot;: 2, &quot;height&quot;: 1.12, &quot;autoplay&quot;:true, &quot;loop&quot;:true}[video[http://localhost:8000/hyperreal/IMG_2627.mp4]vidclick]
+
+{&quot;video&quot;:true}((http://localhost:8000/hyperreal/R0010768_er.mp4))</tw-passagedata></tw-storydata>
     <a-scene device-motion-permission>
       <a-assets><img src="https://cdn.jsdelivr.net/gh/UofTMADLab/reach-dist/reachDefaultRoom.png" id="reach-default-360"/ crossorigin="anonymous"> </a-assets>
 <a-entity id="container"> </a-entity>
