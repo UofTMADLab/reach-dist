@@ -1,0 +1,34 @@
+{
+  "name": "reach-dist",
+  "version": "1.0.61",
+  "description": "**reach** is a Twine story format for authoring immersive XR narratives, environments and prototypes.",
+  "main": "reach.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"server": "http-server -p 8000 --cors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UofTMADLab/reach-dist.git"
+  },
+  "keywords": [
+    "twine",
+    "xr",
+    "vr",
+    "360",
+    "aframe"
+  ],
+  "author": "Michael Spears",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UofTMADLab/reach-dist/issues"
+  },
+  "homepage": "https://github.com/UofTMADLab/reach-dist#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}
