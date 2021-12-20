@@ -4,6 +4,10 @@
 
 **reach** works as a custom story format for [Twine](https://twinery.org), a popular tool for creating interactive stories. The reach story format adds custom codes to Twine that you can use to specify content that will appear in an interactive virtual world. reach also includes a runtime that renders your story as a virtual 3D environment in your browser. The reach runtime is built on top of the [a-frame](https://aframe.io) 3D browser framework. 
 
+**reach** has been most recently verified to work with Twine version 2.3.15, both on the Twine website and in the standalone app. If you run into difficulties please feel free to submit a ticket on the [issues board ](https://github.com/UofTMADLab/reach-dist/issues).
+
+The following is a reference covering the essentials of **reach**. For a more descriptive introduction, please see the e-book [Guide To Reach](https://ecampusontario.pressbooks.pub/reach/front-matter/introduction/).
+
 ## Getting Started
 
 To use reach as the story format for your Twine story you need to import the custom reach format file into Twine. 
